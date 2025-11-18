@@ -19,16 +19,16 @@ jobs:
           node-version: 16.x
 
       - name: Install Dependencies
-      - run: cd backend && npm i
+        run: cd backend && npm i
 
       - name: Build Project
-      - run: cd backend && npm i && npm run build
+        run: cd backend && npm i && npm run build
 
       - name: Generate Artifact
-      - run: cd backend && zip -r backend-artifact.zip build/
+        run: cd backend && zip -r backend-artifact.zip build/
 
       - name: Store Artifact
         uses: actions/upload-artifact@v2
         with:
           name: backend-artifact
-          path: backend/build/backend-artifact.zip
+          path: backend/build/backend-artifact.zip`
