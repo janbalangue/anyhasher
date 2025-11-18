@@ -103,7 +103,6 @@ jobs:
         uses: github/codeql-action/init@v4
         with:
           languages: javascript
-          build-mode: autobuild
 
       - name: Cache Node Modules
         id: cache
