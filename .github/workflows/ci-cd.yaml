@@ -11,10 +11,10 @@ jobs:
           key: node-modules-cache
 
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
       
       - name: Setup node
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v4
         with:
           node-version: 16.x
 
@@ -28,7 +28,7 @@ jobs:
         run: cd backend && zip -r backend-artifact.zip build/
 
       - name: Store Artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: backend-artifact
           path: backend/build/backend-artifact.zip`
