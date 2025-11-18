@@ -4,25 +4,30 @@ jobs:
   compile:
     runs-on: ubuntu-latest
     steps:
-      - name: Cache node modules
-        uses: actions/cache@v4
-        with:
-          path: node_modules
-          key: node-modules-cache
-
       - name: Checkout code
         uses: actions/checkout@v4
-      
+
       - name: Setup node
         uses: actions/setup-node@v4
         with:
           node-version: 24.x
 
+      - name: Cache node modules and npm cache
+        uses: actions/cache@v4
+        with:
+          # Include the runner's npm cache (exists) plus the repo node_modules.
+          path: |
+            ~/.npm
+            backend/node_modules
+          key: ${{ runner.os }}-backend-node-${{ hashFiles('backend/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-backend-node-
+
       - name: Install Dependencies
-        run: cd backend && npm i
+        run: cd backend && npm ci
 
       - name: Build Project
-        run: cd backend && npm i && npm run build
+        run: cd backend && npm run build
 
       - name: Generate Artifact
         run: |
