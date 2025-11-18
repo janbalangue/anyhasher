@@ -25,10 +25,12 @@ jobs:
         run: cd backend && npm i && npm run build
 
       - name: Generate Artifact
-        run: cd backend/build && zip -r artifact.zip ./
+        run: |
+          sudo apt-get update && sudo apt-get install -y zip
+          cd backend/build && zip -r artifact.zip ./
 
       - name: Store Artifact
         uses: actions/upload-artifact@v4
         with:
           name: backend-artifact
-          path: backend/build/artifact.zip`
+          path: backend/build/*.zip
