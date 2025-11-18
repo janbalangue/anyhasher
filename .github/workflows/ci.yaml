@@ -90,12 +90,20 @@ jobs:
       - name: Run Tests
         run: cd backend && npm run test
   
-  security-audit:
+  static-analysis:
     needs: [build]
     runs-on: ubuntu-latest
+    permissions:
+      security-events: write
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
+      - name: Setup CodeQL
+        uses: github/codeql-action/init@v2
+        with:
+          languages: javascript
+          build-mode: autobuild
 
       - name: Cache Node Modules
         id: cache
@@ -112,7 +120,8 @@ jobs:
         if: steps.cache.outputs.cache-hit != 'true'
         run: cd backend && npm i
 
-      - name: Run Security Audit
-        run: cd backend && npm audit --audit-level=moderate
-        continue-on-error: true
-  
+      - name: Build for CodeQL
+        run: cd backend && npm run build
+
+      - name: Run Static Analysis
+        uses: github/codeql-action/analyze@v2
