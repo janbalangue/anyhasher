@@ -89,4 +89,16 @@ jobs:
 
       - name: Run Tests
         run: cd backend && npm run test
+  
+  security-audit:
+    needs: [build]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Cache Node Modules
+        id: cache
+        uses: actions/cache@v4
+        with:
       
